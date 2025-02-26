@@ -1,6 +1,6 @@
 import { View, StyleSheet } from "react-native";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
-import ImageList from "@/components/ImageList";
+import ImageList from "@/ImageList";
 
 export default function Index() {
   return (

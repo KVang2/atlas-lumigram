@@ -1,11 +1,13 @@
 import { useState } from "react";
 import { View, Image, Alert, FlatList, StyleSheet, Text } from "react-native";
-import { placeholderImages } from "@/components/placeholder"; // Import placeholder data
+import { homeFeed } from "@/placeholder";
 import {
   LongPressGestureHandler,
   TapGestureHandler,
   State,
 } from "react-native-gesture-handler";
+
+
 
 export default function ImageList() {
   const [visibleCaption, setVisibleCaption] = useState<string | null>(null);
@@ -14,7 +16,7 @@ export default function ImageList() {
     <View style={styles.container}>
       {/* Flatlist for rendering images */}
       <FlatList
-        data={placeholderImages}
+        data={homeFeed}
         keyExtractor={(item) => item.id}
         renderItem={({ item }) => (
           <TapGestureHandler
@@ -35,7 +37,7 @@ export default function ImageList() {
               }}
             >
               <View style={styles.imageContainer}>
-                <Image source={{ uri: item.url }} style={styles.image} />
+                <Image source={{ uri: item.image }} style={styles.image} />
                 {visibleCaption === item.id && (
                   <View style={styles.captionContainer}>
                     <Text style={styles.caption}>Placeholder Caption</Text>
