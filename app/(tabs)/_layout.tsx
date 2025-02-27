@@ -1,6 +1,6 @@
 import { Tabs } from 'expo-router';
 import React from 'react';
-import { Platform} from 'react-native';
+import { Platform } from 'react-native';
 
 import { HapticTab } from '@/components/HapticTab';
 import { IconSymbol } from '@/components/ui/IconSymbol';
@@ -15,7 +15,7 @@ export default function TabLayout() {
   return (
     <Tabs
       screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
+        tabBarActiveTintColor: "#1ED2AF",
         headerShown: true,
         headerRight: () => <LogoutComponent />,
         tabBarButton: HapticTab,
@@ -32,6 +32,7 @@ export default function TabLayout() {
         name="index"
         options={{
           title: 'Home Feed',
+          headerTitleAlign: "left",
           tabBarIcon: ({ color }) => <IconSymbol size={28} name="house.fill" color={color} />,
         }}
       />
@@ -39,6 +40,7 @@ export default function TabLayout() {
         name="search"
         options={{
           title: 'Search',
+          headerTitleAlign: "left",
           tabBarIcon: ({ color  }) => <IconSymbol size={28} name="magnifyingglass"
           color={color}
           />,
@@ -48,6 +50,7 @@ export default function TabLayout() {
         name="add-post"
         options={{
           title: 'Add Post',
+          headerTitleAlign: "left",
           tabBarIcon: ({ color  }) => <IconSymbol size={28} name="plus"
           color={color}
           />,
@@ -57,6 +60,7 @@ export default function TabLayout() {
         name="favorites"
         options={{
           title: 'Favorites',
+          headerTitleAlign: "left",
           tabBarIcon: ({ color  }) => <IconSymbol size={28} name="heart.fill"
           color={color}
           />,
@@ -66,6 +70,7 @@ export default function TabLayout() {
         name="profile/index"
         options={{
           title: 'My Profile',
+          headerTitleAlign: "left",
           tabBarIcon: ({ color  }) => <IconSymbol size={28} name="person.fill"
           color={color}
           />,
@@ -75,6 +80,7 @@ export default function TabLayout() {
         name="profile/[id]"
         options={{
           title: 'My Profile',
+          headerTitleAlign: "left",
           href: null,
         }}
       />

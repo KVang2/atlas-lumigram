@@ -61,6 +61,7 @@ const style = StyleSheet.create({
         borderColor: '#1ED2AF',
         padding: 10,
         borderRadius: 3,
+        color: "#FFF",
     },
     textPw: {
         width: 400,
@@ -71,10 +72,11 @@ const style = StyleSheet.create({
         padding: 10,
         bottom: 18,
         borderRadius: 3,
+        color: "#FFFFFF"
     },
     buttonCreate: {
         backgroundColor: '#1ED2AF',
-        color: 'white',
+        color: '#FFFFFF',
         padding: 10,
         borderRadius: 3,
         borderWidth: 1,
