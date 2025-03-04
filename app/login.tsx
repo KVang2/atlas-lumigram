@@ -1,8 +1,27 @@
 import { Link, useRouter } from "expo-router";
 import { Pressable, Text, TextInput, View, StyleSheet } from "react-native";
+import { useAuth } from "@/components/AuthProvider";
+import { useState } from "react";
 
 export default function Page() {
+
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [loading, setLoading] = useState(false);
+    const auth = useAuth();
     const router = useRouter();
+
+    async function login() {
+        setLoading(true);
+        try {
+            await auth.login(email, password);
+            router.replace("/(tabs)");
+        } catch(err) {
+            alert("email or Password is incorrect")
+        }
+        setLoading(false);
+    }
+
     return (
         <View style={style.style}>
             <Text style={style.atlas}>Atlas</Text>
@@ -13,18 +32,21 @@ export default function Page() {
                 placeholder="Email"
                 placeholderTextColor={'#FFFFFF'}
                 keyboardType="email-address"
-                autoComplete="email"/>
+                autoComplete="email"
+                value={email}
+                onChangeText={setEmail}
+            />
             <TextInput
                 style={style.textPw}
                 placeholderTextColor={'#FFFFFF'}
                 placeholder="Password"
                 secureTextEntry={true}
+                value={password}
+                onChangeText={setPassword}
                 />
             <Pressable 
                 style={style.buttonSignIn}
-                onPress={() => {
-                router.replace("/(tabs)/");
-                }}
+                onPress={login}
             >
                 <Text style={style.signtext}>Sign In</Text>
             </Pressable>

@@ -1,9 +1,26 @@
-import { Link } from "expo-router";
-import { Text, View, TextInput, StyleSheet } from "react-native";
+import { Link, useRouter } from "expo-router";
+import { useState } from "react";
+import { Text, View, TextInput, StyleSheet, Pressable } from "react-native";
+import { useAuth } from "@/components/AuthProvider";
 
 export default function Page() {
+    const [email, setEmail] = useState("");
+    const [password, setPassword] = useState("");
+    const [loading, setLoading] = useState(false);
+    const auth = useAuth();
+    const router = useRouter();
+
+    async function register() {
+        try {
+        await auth.register(email, password);
+        router.replace("/(tabs)");
+    } catch(err) {
+        alert("Unable to create account");
+        }
+    }
+
     return (
-        <View style={style.style}>
+        <View style={style.stylereg}>
             <Text style={style.atlas}>Atlas</Text>
             <Text style={style.school}>S C H O O L</Text>
             <Text style={style.reg}>Register</Text>
@@ -12,16 +29,21 @@ export default function Page() {
                 placeholderTextColor={'#FFFFFF'}
                 style={style.textEmail}
                 keyboardType="email-address"
-                autoComplete="email"/>
+                autoComplete="email"
+                value={email}
+                onChangeText={setEmail}
+            />
             <TextInput
                 style={style.textPw}
                 placeholderTextColor={'#FFFFFF'}
                 placeholder="Password"
                 secureTextEntry={true}
+                value={password}
+                onChangeText={setPassword}
                 />
-                <Link style={style.buttonCreate} href="/" replace >
+                <Pressable style={style.buttonCreate} onPress={register} >
                     <Text>Create Account</Text>
-                </Link>
+                </Pressable>
                 <Link style={style.buttonLogin} href="/login" replace>
                     <Text>Log in to existing account</Text>
                 </Link>
@@ -30,7 +52,7 @@ export default function Page() {
 }
 
 const style = StyleSheet.create({
-    style: {
+    stylereg: {
         flex: 1,
         alignItems: 'center',
         justifyContent: 'center',
