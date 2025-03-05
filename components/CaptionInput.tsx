@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, Text, StyleSheet } from 'react-native';
+import { View, Keyboard, StyleSheet } from 'react-native';
 import { TextInput } from 'react-native';
 
 interface CaptionInputProps {
@@ -16,6 +16,8 @@ export default function CaptionInput({ caption, setCaption }: CaptionInputProps)
                 onChangeText={setCaption}
                 placeholder="Add a caption..."
                 placeholderTextColor="#999"
+                returnKeyType="done"
+                onSubmitEditing={Keyboard.dismiss}
                 multiline
                 />
         </View>
