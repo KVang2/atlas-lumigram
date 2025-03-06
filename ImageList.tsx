@@ -46,7 +46,7 @@ export default function ImageList() {
     return () => unsubscribe(); // Cleanup Firestore listener
   }, []);
 
-  {/* Pull to refresh function */}
+  // Pull to refresh function
   const onRefresh = async () => {
     setRefreshing(true);
     await fetchImages();

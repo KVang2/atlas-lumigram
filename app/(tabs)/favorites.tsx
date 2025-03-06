@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { View, Image, Alert, FlatList, StyleSheet, Text } from "react-native";
+import { View, Image, Alert, FlatList, StyleSheet, Text, RefreshControl } from "react-native";
 import { favoritesFeed } from "@/placeholder";
 import {
 GestureHandlerRootView,
@@ -10,12 +10,22 @@ GestureHandlerRootView,
 
 export default function ImageList() {
   const [visibleCaption, setVisibleCaption] = useState<string | null>(null);
+  const [refreshing, setRefreshing] = useState(false);
+
+  // Pull to refresh function
+  const onRefresh = async () => {
+    setRefreshing(true);
+    await fetchImages();
+    setRefreshing(false);
+  };
+
     return (
         <GestureHandlerRootView>
             <View style={styles.container}>
             {/* Flatlist */}
             <FlatList
                 data={favoritesFeed}
+                refreshControl={<RefreshControl refreshing={refreshing} onRefresh={onRefresh} />}
                 keyExtractor={(item) => item.id}
                 renderItem={({ item }) => (
                     <TapGestureHandler
@@ -86,3 +96,11 @@ const styles = StyleSheet.create ({
         borderRadius: 5,
     },
 });
+function setRefreshing(arg0: boolean) {
+    throw new Error("Function not implemented.");
+}
+
+function fetchImages() {
+    throw new Error("Function not implemented.");
+}
+
