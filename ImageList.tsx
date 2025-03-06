@@ -9,7 +9,7 @@ import {
 import { db } from "@/firebaseConfig";
 import { query, orderBy, collection, onSnapshot, getDocs } from "firebase/firestore";
 import { useAuth } from "@/components/AuthProvider";
-import { unsubscribeFromKeyboardEvents } from "react-native-reanimated/lib/typescript/core";
+import { doc, updateDoc, arrayUnion, setDoc, getDoc } from "firebase/firestore";
 
 
 export default function ImageList() {
@@ -18,7 +18,7 @@ export default function ImageList() {
   const auth = useAuth();
   const [refreshing, setRefreshing] = useState(false);
 
-  {/* update new data from  */}
+  // update new data
   const fetchImages = async () => {
     const q = query(collection(db, "posts"), orderBy("createdAt", "desc"));
     const snapshot = await getDocs(q);
@@ -53,6 +53,32 @@ export default function ImageList() {
     setRefreshing(false);
   };
 
+  const addToFavorites = async (userId: string, imageUrl: unknown) => {
+    if (!userId) return;
+  
+    const userRef = doc(db, "users", userId);
+  
+    try {
+      const docSnap = await getDoc(userRef);
+  
+      if (docSnap.exists()) {
+        // If user exists, update the favorites array
+        await updateDoc(userRef, {
+          favorites: arrayUnion(imageUrl),
+        });
+      } else {
+        // If user does not exist, create a new document with favorites array
+        await setDoc(userRef, {
+          favorites: [imageUrl],
+        });
+      }
+  
+      console.log("Image added to favorites!");
+    } catch (error) {
+      console.error("Error adding to favorites:", error);
+    }
+  }
+
   return (
     <View style={styles.container}>
       {/* Flatlist for rendering images */}
@@ -65,7 +91,10 @@ export default function ImageList() {
             numberOfTaps={2}
             onHandlerStateChange={({ nativeEvent }) => {
               if (nativeEvent.state === State.ACTIVE) {
-                Alert.alert("Favorite image");
+                if (auth?.user?.uid) {
+                  addToFavorites(auth.user.uid, item.image);
+                  Alert.alert("Favorite image");
+                }
               }
             }}
           >
